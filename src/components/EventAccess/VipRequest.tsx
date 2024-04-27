@@ -37,12 +37,16 @@ function VipRequest({ join, setJoin }) {
 
   if (done)
     return (
-      <div className=" flex items-center flex-col gap-5">
-        <MuiIcon name="CheckCircle" color="primary" sx={{ fontSize: 50 }} />
-        <p className=" text-primary text-7 capitalize font-semibold">
-          Ihre Anfrage wurde erfolgreich übermittelt
-        </p>
-        <CircularProgress />
+      <div className="  flex flex-col justify-start gap-7 min-h-[40vh] my-10  px-2 md:px-20 z-[2] container">
+        <Paper
+          elevation={0}
+          className=" p-8 flex items-center justify-center flex-col gap-5"
+        >
+          <CircularProgress />
+          <p className="  text-[15px] capitalize font-semibold text-center">
+            Ihre Anfrage wurde erfolgreich übermittelt
+          </p>
+        </Paper>
       </div>
     );
   return (
