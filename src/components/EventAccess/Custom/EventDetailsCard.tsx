@@ -4,6 +4,7 @@ import logo from '/logo.webp';
 import { useSelector } from 'react-redux';
 import { RootState } from '@src/store/store';
 import { Paper } from '@mui/material';
+import { motion } from 'framer-motion';
 
 const EventDetailsCard = ({ data, isEnded, CountDown, invitaion }) => {
   const { Auth } = useSelector((state: RootState) => state.App);
@@ -24,7 +25,10 @@ const EventDetailsCard = ({ data, isEnded, CountDown, invitaion }) => {
       )}
       <div className=" grid grid-cols-1 lg:grid-cols-2   ">
         <div className="  p-3 flex justify-center items-center bg-slate-900 ">
-          <img
+          <motion.img
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1 }}
             src={data?.image || logo}
             alt=""
             className={` ${
@@ -33,11 +37,11 @@ const EventDetailsCard = ({ data, isEnded, CountDown, invitaion }) => {
           />
         </div>
         <Paper elevation={0}>
-          <div className=" z-[2] flex  justify-between text-white p-5 flex-wrap">
+          <div className=" z-[2] flex  justify-between text-primary dark:text-success p-5 flex-wrap">
             <p className=" text-6">{data?.name}</p>
             {data?.date && (
               <p className="   ">
-                {format(new Date(data?.date), ' dd-MM-yyyy , HH:mm')}
+                {format(new Date(data?.date), ' dd.MM.yyyy @ HH:mm')}
               </p>
             )}
           </div>
@@ -52,51 +56,45 @@ const EventDetailsCard = ({ data, isEnded, CountDown, invitaion }) => {
               </p>
               {CountDown && (
                 <div className=" flex justify-evenly items-center gap-3 text-6 text-center  text-white text-7">
-                  <Paper
-                    elevation={0}
-                    className=" bg-primary/80 p-3 rounded-lg flex-1 flex md:flex-row flex-col gap-0 md:gap-2"
-                  >
-                    <span className="text-primary font-semibold dark:text-success text-6">
-                      {CountDown.day}
-                    </span>{' '}
-                    Tage
-                  </Paper>
-                  <Paper
-                    elevation={0}
-                    className=" bg-primary/80 p-3 rounded-lg flex-1 flex md:flex-row flex-col gap-0 md:gap-2"
-                  >
-                    <span className="text-primary font-semibold dark:text-success text-6">
-                      {' '}
-                      {CountDown.hour}
-                    </span>{' '}
-                    Std.
-                  </Paper>
-                  <Paper
-                    elevation={0}
-                    className=" bg-primary/80 p-3 rounded-lg flex-1 flex md:flex-row flex-col gap-0 md:gap-2"
-                  >
-                    <span className="text-primary font-semibold dark:text-success text-6">
-                      {CountDown.minute}
-                    </span>{' '}
-                    Min
-                  </Paper>
-                  <Paper
-                    elevation={0}
-                    className=" bg-primary/80 p-3 rounded-lg flex-1 flex md:flex-row flex-col gap-0 md:gap-2"
-                  >
-                    <span className="text-primary font-semibold dark:text-success text-6">
-                      {CountDown.second}
-                    </span>{' '}
-                    Sek
-                  </Paper>
+                  {[
+                    { name: 'Tage', remain: CountDown.day },
+                    { name: 'Std', remain: CountDown.hour },
+                    { name: 'Min', remain: CountDown.minute },
+                    { name: 'Sek', remain: CountDown.second },
+                  ].map((item, index) => {
+                    return (
+                      <motion.div
+                        initial={{ scale: 0, rotate: 360 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ duration: 1, delay: index * 0.2 + 1 }}
+                        key={index}
+                        className=" w-full"
+                      >
+                        <Paper
+                          elevation={0}
+                          className=" bg-primary/80 p-3 rounded-lg flex-1 flex md:flex-row flex-col gap-0 md:gap-2"
+                        >
+                          <span className="text-primary font-semibold dark:text-success text-6">
+                            {item.remain}
+                          </span>{' '}
+                          {item.name}
+                        </Paper>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               )}
             </div>
           )}
           {data?.description && (
-            <div className=" max-h-[190px] overflow-auto  p-3  my-2  capitalize ">
-              <p className="  text-7  ">{data?.description}</p>
-            </div>
+            <motion.div
+              initial={{ height: 0 }}
+              animate={{ height: 'auto' }}
+              transition={{ duration: 1, delay: 3 }}
+              className=" max-h-[190px] overflow-auto    my-2  capitalize "
+            >
+              <p className="  text-7  p-3">{data?.description}</p>
+            </motion.div>
           )}
         </Paper>
       </div>

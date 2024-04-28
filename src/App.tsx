@@ -7,6 +7,7 @@ import DashThemeProvider from './@core/Providers/DashThemeProvider';
 import { useAuth } from './Auth/useAuth';
 import store from './store/store';
 import { UpdateAuth } from './actions/App/AppSlice';
+import { AppLoading } from './@core/components/AppLoading';
 
 function App() {
   const { pathname } = useLocation();

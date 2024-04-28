@@ -7,7 +7,7 @@ function MainLayout({ children }: { children: ReactNode }) {
   const mode = useSelector((state: RootState) => state.App.mode);
   return (
     <>
-      <div className=" min-h-[100vh] flex flex-col ">
+      <div className=" min-h-[100vh] flex flex-col overflow-hidden">
         <DashNavBar />
         <div
           className=" flex-1  grad "

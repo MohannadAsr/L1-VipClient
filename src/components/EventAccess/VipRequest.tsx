@@ -19,7 +19,7 @@ function VipRequest({ join, setJoin }) {
   const [done, setDone] = React.useState<boolean>(false);
 
   const validationSchema = yup.object({
-    name: yup.string().required(),
+    name: yup.string().required('Bitte geben Sie Ihren Namen an.'),
     email: yup.string().email().nullable(),
     phone: yup.number().nullable(),
   });
