@@ -4,7 +4,6 @@ import { CreateEventDTO, EventDTO, HomeInfo, InvitaionByEventDto } from './Dto';
 import { EVENTS_API } from './EndPoints';
 import { Invitations_API } from '../Invitaions/EndPoints';
 import { PaginationControlDTO, paginationDTO } from '../Vips/Dto';
-import { InvitationsFilters } from '@components/Events/EventInvitaions';
 import { TableDto } from '../Products/Dto';
 
 const { POST, GET, DELETE } = useApi();
@@ -40,20 +39,6 @@ const deleteEvent = async (payload: { id: string }) => {
   return response.data;
 };
 
-const getEventInvitations = async (
-  payload: string,
-  pagination: PaginationControlDTO,
-  filter: InvitationsFilters
-) => {
-  const response = await GET<{
-    data: InvitaionByEventDto[];
-    pagination: paginationDTO;
-  }>(`${Invitations_API.InvitaionsByEvent}${payload}`, {
-    ...pagination,
-    ...filter,
-  });
-  return response.data;
-};
 export const MutateAddEvent = () => {
   return useMutation({
     mutationKey: ['addEvent'],
@@ -81,18 +66,6 @@ export const useEventByIdQueries = (id: string) => {
   return useQuery({
     queryKey: ['eventById', id],
     queryFn: () => addEventById(id),
-    refetchOnWindowFocus: false,
-  });
-};
-
-export const useInvitaionsByEventQuery = (
-  id: string,
-  pagination: PaginationControlDTO,
-  filter: InvitationsFilters
-) => {
-  return useQuery({
-    queryKey: ['invitaionsById', id],
-    queryFn: () => getEventInvitations(id, pagination, filter),
     refetchOnWindowFocus: false,
   });
 };
